@@ -6,4 +6,5 @@ config :logger,
 
 config :logger, LoggerNsq.Backend,
   metadata: [:application, :file, :line, :user_id],
-  nsqds: ["127.0.0.1:4150"]
+  nsqds: ["127.0.0.1:4150"],
+  nsq_default_topic: "foo"

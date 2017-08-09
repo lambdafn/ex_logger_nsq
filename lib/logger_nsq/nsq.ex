@@ -10,9 +10,15 @@ defmodule LoggerNsq.Nsq do
 
     case Keyword.get(config, :nsqds) do
       nsqds when is_list(nsqds) ->
-        {:ok, _producer} = NSQ.Producer.Supervisor.start_link("chrome_worker_errors", %NSQ.Config{
-          nsqds: nsqds
-        })
+
+        case Keyword.get(config, :nsq_default_topic) do
+          topic when is_binary(topic) ->
+            {:ok, _producer} = NSQ.Producer.Supervisor.start_link(topic, %NSQ.Config{
+              nsqds: nsqds
+            })
+          _ ->
+            {:stop, "No NSQ topic configuration found.  Please configure `:logger, LoggerNsq.Backend`"}
+        end
       _ ->
         {:stop, "No NSQD configuration found.  Please configure `:logger, LoggerNsq.Backend`"}
     end
