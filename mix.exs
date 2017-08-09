@@ -29,6 +29,8 @@ defmodule LoggerNsq.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:elixir_nsq, github: "lambdafn/elixir_nsq", ref: "1cae65b20b8240b82625d091564df1fa33d4fbd6"}
+    ]
   end
 end
